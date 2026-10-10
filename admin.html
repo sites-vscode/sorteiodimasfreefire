@@ -90,11 +90,15 @@
 		<section class="panel login-panel" id="login-view" aria-labelledby="login-title">
 			<div class="kicker">Acesso restrito</div>
 			<h1 id="login-title">Área admin</h1>
-			<p>Digite o código de acesso para consultar as inscrições disponíveis neste navegador.</p>
+			<p>Entre com a conta administrativa para consultar as inscrições.</p>
 			<form id="login-form">
 				<div class="field">
-					<label for="access-code">Código de acesso</label>
-					<input id="access-code" name="accessCode" type="password" autocomplete="current-password" required>
+					<label for="admin-email">E-mail</label>
+					<input id="admin-email" name="email" type="email" autocomplete="username" required>
+				</div>
+				<div class="field">
+					<label for="admin-password">Senha</label>
+					<input id="admin-password" name="password" type="password" autocomplete="current-password" required>
 				</div>
 				<button class="button button-primary" type="submit">Entrar no painel</button>
 				<p class="message" id="login-message" role="status" aria-live="polite"></p>
@@ -103,8 +107,9 @@
 
 		<section class="dashboard" id="dashboard" aria-labelledby="dashboard-title">
 			<div class="dashboard-header">
-				<div><div class="kicker">Resumo da rodada</div><h1 id="dashboard-title">Inscrições</h1><p class="subheading">Participantes salvos localmente neste navegador.</p></div>
+				<div><div class="kicker">Resumo da rodada</div><h1 id="dashboard-title">Inscrições</h1><p class="subheading">Participantes recebidos pelo site.</p></div>
 				<div class="actions">
+					<button class="button" id="reload-button" type="button">Atualizar</button>
 					<button class="button" id="export-button" type="button">Exportar CSV</button>
 					<button class="button" id="logout-button" type="button">Sair</button>
 				</div>
@@ -130,11 +135,16 @@
 					</table>
 				</div>
 			</div>
-			<p class="notice">Importante: este painel lê o armazenamento local deste dispositivo e navegador. O código nesta página é uma barreira visual, não uma autenticação segura para um site público.</p>
+			<p class="notice">Os dados são carregados do banco compartilhado. O acesso à lista exige uma conta administrativa autorizada.</p>
 		</section>
 	</main>
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+	<script src="supabase-config.js"></script>
 	<script>
-		const accessCode = "SHADOW2011";
+		const supabaseConfig = window.DROP_SUPABASE_CONFIG;
+		const supabaseClient = supabaseConfig?.url && supabaseConfig?.anonKey
+			? window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey)
+			: null;
 		const loginView = document.querySelector("#login-view");
 		const dashboard = document.querySelector("#dashboard");
 		const loginForm = document.querySelector("#login-form");
@@ -147,13 +157,35 @@
 		let entries = [];
 		let drawnIndexes = [];
 
-		function loadEntries() {
-			try {
-				const storedEntries = JSON.parse(localStorage.getItem("dropEntries") || "[]");
-				entries = Array.isArray(storedEntries) ? storedEntries.filter((entry) => entry && typeof entry === "object") : [];
-			} catch {
+		async function loadEntries() {
+			if (!supabaseClient) {
 				entries = [];
+				document.querySelector("#entry-count").textContent = "0";
+				renderEntries();
+				renderDraw();
+				drawStatus.textContent = "Banco de dados não configurado. Confira supabase-config.js.";
+				return;
 			}
+
+			const { data, error } = await supabaseClient
+				.from("entries")
+				.select("id,nickname,player_id,registered_at")
+				.order("registered_at", { ascending: true })
+				.order("id", { ascending: true });
+			if (error) {
+				entries = [];
+				document.querySelector("#entry-count").textContent = "0";
+				renderEntries();
+				renderDraw();
+				drawStatus.textContent = "Não foi possível carregar as inscrições. Confira o acesso ao banco.";
+				return;
+			}
+			entries = Array.isArray(data) ? data.map((entry) => ({
+				id: entry.id,
+				nickname: entry.nickname,
+				playerId: entry.player_id,
+				registeredAt: entry.registered_at
+			})) : [];
 			try {
 				const storedDraws = JSON.parse(sessionStorage.getItem("dropDrawnIndexes") || "[]");
 				drawnIndexes = Array.isArray(storedDraws)
@@ -290,31 +322,42 @@
 		function showDashboard() {
 			loginView.style.display = "none";
 			dashboard.style.display = "block";
-			loadEntries();
+			void loadEntries();
 		}
 
-		loginForm.addEventListener("submit", (event) => {
+		loginForm.addEventListener("submit", async (event) => {
 			event.preventDefault();
-			if (document.querySelector("#access-code").value !== accessCode) {
-				loginMessage.textContent = "Código incorreto. Tente novamente.";
+			if (!supabaseClient) {
+				loginMessage.textContent = "Banco de dados não configurado. Confira supabase-config.js.";
 				return;
 			}
-			sessionStorage.setItem("dropAdminAccess", "granted");
+			const email = document.querySelector("#admin-email").value.trim();
+			const password = document.querySelector("#admin-password").value;
+			const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+			if (error) {
+				loginMessage.textContent = "Não foi possível entrar. Confira o e-mail e a senha.";
+				return;
+			}
 			loginMessage.textContent = "";
 			showDashboard();
 		});
 
 		searchInput.addEventListener("input", renderEntries);
+		document.querySelector("#reload-button").addEventListener("click", () => void loadEntries());
 		document.querySelector("#export-button").addEventListener("click", exportEntries);
-		document.querySelector("#logout-button").addEventListener("click", () => {
-			sessionStorage.removeItem("dropAdminAccess");
+		document.querySelector("#logout-button").addEventListener("click", async () => {
+			if (supabaseClient) await supabaseClient.auth.signOut();
 			searchInput.value = "";
 			loginForm.reset();
 			dashboard.style.display = "none";
 			loginView.style.display = "block";
 		});
 
-		if (sessionStorage.getItem("dropAdminAccess") === "granted") showDashboard();
+		if (supabaseClient) {
+			supabaseClient.auth.getSession().then(({ data, error }) => {
+				if (!error && data.session) showDashboard();
+			});
+		}
 	</script>
 </body>
 </html>
