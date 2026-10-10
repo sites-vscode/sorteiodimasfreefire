@@ -264,7 +264,7 @@
 		<section class="shell entry-section" id="inscricao">
 			<div class="entry-wrap" id="como-participar">
 				<div class="entry-aside">
-					<div><div class="kicker">É rapidinho</div><h2>Cola com a gente.</h2><p>Preencha seus dados de jogador e pronto: você entra na lista demonstrativa desta página.</p></div>
+					<div><div class="kicker">É rapidinho</div><h2>Cola com a gente.</h2><p>Preencha seus dados de jogador e pronto: você entra na lista desta rodada.</p></div>
 					<div class="safe-note">🔒 Nunca pedimos senha, código de acesso ou dados de pagamento.</div>
 				</div>
 				<form class="entry-form" id="entry-form">
@@ -300,13 +300,19 @@
 		<div class="shell footer-inner">
 			<a href="admin.html">Área administrativa</a>
 			<strong>DROP DE DIAMANTES <span aria-hidden="true">·</span> comunidade Free Fire</strong>
-			<div class="fine-print">Esta é uma página independente de fã, sem vínculo com Garena. Inscrições desta demonstração ficam apenas neste dispositivo e não são enviadas ao organizador.</div>
+			<div class="fine-print">Esta é uma página independente de fã, sem vínculo com Garena. As inscrições são armazenadas para a organização do sorteio.</div>
 		</div>
 	</footer>
 
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+	<script src="supabase-config.js"></script>
 	<script>
 		const form = document.querySelector("#entry-form");
 		const message = document.querySelector("#form-message");
+		const supabaseConfig = window.DROP_SUPABASE_CONFIG;
+		const supabaseClient = supabaseConfig?.url && supabaseConfig?.anonKey
+			? window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey)
+			: null;
 		const deadline = new Date("2026-10-17T18:00:00-03:00").getTime();
 
 		function updateCountdown() {
@@ -346,7 +352,7 @@
 			}
 		});
 
-		form.addEventListener("submit", (event) => {
+		form.addEventListener("submit", async (event) => {
 			event.preventDefault();
 			if (!form.reportValidity()) return;
 
@@ -358,22 +364,31 @@
 				return;
 			}
 
-			const entry = {
-				nickname: String(data.get("nickname")).trim(),
-				playerId,
-				registeredAt: new Date().toISOString()
-			};
+			if (!supabaseClient) {
+				message.textContent = "Inscrições temporariamente indisponíveis. Tente novamente mais tarde.";
+				message.classList.add("error");
+				return;
+			}
 
+			const submitButton = form.querySelector("button[type='submit']");
+			const originalButtonText = submitButton.innerHTML;
+			submitButton.disabled = true;
+			submitButton.textContent = "Enviando...";
 			try {
-				const entries = JSON.parse(localStorage.getItem("dropEntries") || "[]");
-				entries.push(entry);
-				localStorage.setItem("dropEntries", JSON.stringify(entries));
-				message.textContent = "Inscrição demonstrativa salva neste dispositivo. Ela não foi enviada ao organizador.";
+				const { error } = await supabaseClient.from("entries").insert({
+					nickname: String(data.get("nickname")).trim(),
+					player_id: playerId
+				});
+				if (error) throw error;
+				message.textContent = "Inscrição recebida! Boa sorte no sorteio.";
 				message.classList.remove("error");
 				form.reset();
 			} catch {
-				message.textContent = "Não foi possível salvar neste navegador. Nenhum dado foi enviado.";
+				message.textContent = "Não foi possível enviar a inscrição. Confira sua conexão e tente novamente.";
 				message.classList.add("error");
+			} finally {
+				submitButton.disabled = false;
+				submitButton.innerHTML = originalButtonText;
 			}
 		});
 	</script>
