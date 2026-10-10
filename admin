@@ -4,316 +4,373 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" content="#111411">
-	<title>Admin | Drop de Diamantes</title>
+	<meta name="description" content="Participe do sorteio da comunidade e concorra a diamantes e prêmios de Free Fire.">
+	<title>Drop de Diamantes | Sorteio da comunidade</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<style>
-		:root { color-scheme: dark; --ink: #f5f4ee; --muted: #a5aaa0; --bg: #111411; --panel: #1a1e1a; --line: #30362f; --lime: #c8f169; --orange: #ff754d; --display: "Barlow Condensed", Impact, sans-serif; --body: "DM Sans", sans-serif; }
+		:root {
+			color-scheme: dark;
+			--ink: #f5f4ee;
+			--muted: #a5aaa0;
+			--bg: #111411;
+			--panel: #1a1e1a;
+			--line: #30362f;
+			--lime: #c8f169;
+			--orange: #ff754d;
+			--cyan: #71d8cb;
+			--font-display: "Barlow Condensed", Impact, sans-serif;
+			--font-body: "DM Sans", sans-serif;
+		}
 		* { box-sizing: border-box; }
-		body { min-height: 100vh; margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+		html { scroll-behavior: smooth; }
+		body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); }
 		button, input { font: inherit; }
-		.shell { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
-		.topbar { min-height: 72px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ffffff12; }
-		.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-decoration: none; }
-		.brand-mark { width: 32px; height: 32px; display: grid; place-items: center; background: var(--lime); color: #111411; font: 800 20px var(--display); clip-path: polygon(0 0,100% 0,100% 75%,75% 100%,0 100%); }
-		.status-tag { color: var(--lime); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-		main { padding: 54px 0 80px; }
-		.kicker { color: var(--orange); font-size: 10px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
-		h1 { margin: 8px 0 0; font: 800 48px/1 var(--display); text-transform: uppercase; }
-		.subheading { margin: 10px 0 30px; color: var(--muted); font-size: 13px; line-height: 1.6; }
-		.panel { border: 1px solid var(--line); background: var(--panel); }
-		.login-panel { width: min(430px, 100%); margin: 38px auto; padding: 32px; }
-		.login-panel h1 { font-size: 42px; }
-		.login-panel p { color: var(--muted); font-size: 13px; line-height: 1.65; }
-		.field { display: grid; gap: 8px; margin: 22px 0 14px; }
-		.field label { color: #c5c9c0; font-size: 11px; font-weight: 700; }
-		.field input, .search { width: 100%; height: 44px; padding: 0 13px; border: 1px solid #3a4039; border-radius: 0; outline: 0; background: #111411; color: var(--ink); font-size: 13px; }
-		.field input:focus, .search:focus { border-color: var(--lime); }
-		.button { min-height: 42px; padding: 0 16px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #ffffff38; background: transparent; color: var(--ink); cursor: pointer; font-size: 11px; font-weight: 700; }
-		.button:hover { background: #ffffff0c; }
-		.button-primary { width: 100%; border-color: var(--lime); background: var(--lime); color: #171a13; text-transform: uppercase; }
+		a { color: inherit; text-decoration: none; }
+		.shell { max-width: 1240px; width: calc(100% - 64px); margin: 0 auto; }
+		.topbar { height: 76px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ffffff12; }
+		.brand { display: flex; gap: 11px; align-items: center; font-weight: 700; letter-spacing: .04em; }
+		.brand-mark { width: 34px; height: 34px; display: grid; place-items: center; color: #111411; background: var(--lime); font-family: var(--font-display); font-size: 20px; font-weight: 900; clip-path: polygon(0 0,100% 0,100% 75%,75% 100%,0 100%); }
+		.brand span:last-child { font-size: 13px; }
+		.nav { display: flex; align-items: center; gap: 30px; color: #c6c9c1; font-size: 13px; }
+		.nav a:hover { color: var(--lime); }
+		.nav .nav-cta { padding: 10px 15px; border: 1px solid #ffffff33; color: var(--ink); font-weight: 700; }
+		.hero { min-height: 565px; display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; position: relative; overflow: hidden; }
+		.hero::before { content: ""; position: absolute; inset: 0 -32px; pointer-events: none; background: radial-gradient(ellipse at 80% 48%, #d3693630, transparent 42%), repeating-linear-gradient(135deg, transparent 0 52px, #ffffff08 53px, transparent 54px); }
+		.hero-copy { position: relative; z-index: 1; padding: 70px 0 80px; }
+		.eyebrow { display: flex; align-items: center; gap: 9px; color: var(--lime); text-transform: uppercase; font-size: 11px; font-weight: 700; letter-spacing: .13em; }
+		.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px #ff754d22; }
+		h1 { max-width: 580px; margin: 20px 0 16px; font-family: var(--font-display); font-size: clamp(64px, 8vw, 104px); line-height: .83; font-weight: 900; text-transform: uppercase; letter-spacing: 0; }
+		h1 em { color: var(--lime); font-style: normal; }
+		.hero-copy p { max-width: 430px; margin: 24px 0 30px; color: #b6bbb2; font-size: 15px; line-height: 1.7; }
+		.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+		.button { min-height: 48px; padding: 0 21px; display: inline-flex; justify-content: center; align-items: center; gap: 10px; border: 0; cursor: pointer; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .04em; transition: transform .18s ease, background .18s ease; }
+		.button:hover { transform: translateY(-2px); }
+		.button-primary { background: var(--lime); color: #171a13; }
 		.button-primary:hover { background: #d8ff86; }
-		.message { min-height: 18px; margin: 10px 0 0; color: var(--orange); font-size: 12px; }
-		.dashboard { display: none; }
-		.dashboard-header { display: flex; justify-content: space-between; align-items: end; gap: 20px; }
-		.actions { display: flex; gap: 9px; }
-		.metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 28px 0 18px; }
-		.metric { padding: 18px 20px; border: 1px solid var(--line); background: #171a17; }
-		.metric-label { display: block; color: var(--muted); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; }
-		.metric-value { display: block; margin-top: 7px; color: var(--lime); font: 700 34px/1 var(--display); }
-		.draw-panel { margin-bottom: 18px; padding: 20px; border: 1px solid var(--line); background: #171a17; }
-		.draw-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
-		.draw-copy h2 { margin: 5px 0 0; font: 700 27px/1 var(--display); text-transform: uppercase; }
-		.draw-copy p { margin: 7px 0 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
-		.draw-panel .button-primary { width: auto; min-width: 170px; white-space: nowrap; }
-		.draw-panel .button:disabled { cursor: not-allowed; opacity: .55; }
-		.draw-status { margin: 16px 0 0; padding-top: 13px; border-top: 1px solid var(--line); color: #c4c8be; font-size: 12px; line-height: 1.6; }
-		.winner-list { display: grid; gap: 8px; margin: 12px 0 0; padding: 0; list-style: none; }
-		.winner-list li { padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 14px; border-left: 2px solid var(--lime); background: #111411; }
-		.winner-number { color: var(--lime); font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-		.winner-name { color: var(--ink); font-size: 12px; font-weight: 700; }
-		.winner-id { color: var(--muted); font-size: 11px; }
-		.table-panel { overflow: hidden; }
-		.table-tools { padding: 14px; border-bottom: 1px solid var(--line); }
-		.table-wrap { overflow-x: auto; }
-		table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
-		th, td { padding: 14px 16px; border-bottom: 1px solid #ffffff10; font-size: 12px; }
-		th { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-		td { color: #e2e5dc; }
-		tbody tr:last-child td { border-bottom: 0; }
-		.empty-row td { padding: 30px 16px; color: var(--muted); text-align: center; white-space: normal; }
-		.notice { margin-top: 16px; padding: 13px 15px; border-left: 2px solid var(--orange); background: #ff754d0d; color: #c4c8be; font-size: 11px; line-height: 1.6; }
-		@media (max-width: 620px) {
-			.shell { width: calc(100% - 32px); }
-			main { padding: 38px 0 58px; }
-			h1 { font-size: 42px; }
-			.dashboard-header { align-items: flex-start; flex-direction: column; }
-			.actions { width: 100%; }
-			.actions .button { flex: 1; }
-			.metrics { gap: 8px; }
-			.metric { padding: 15px; }
-			.draw-top { align-items: stretch; flex-direction: column; }
-			.draw-panel .button-primary { width: 100%; }
-			.winner-list li { align-items: flex-start; flex-direction: column; gap: 5px; }
-			.login-panel { padding: 24px; }
+		.button-quiet { color: var(--ink); border: 1px solid #ffffff38; background: transparent; }
+		.button-quiet:hover { background: #ffffff0c; }
+		.hero-note { color: #a5aaa0; font-size: 11px; }
+		.hero-art { min-height: 440px; position: relative; display: grid; place-items: center; }
+		.hero-art img { position: absolute; inset: 12px -42px 5px 0; width: calc(100% + 42px); height: calc(100% - 17px); object-fit: cover; object-position: 52% 42%; opacity: .75; filter: saturate(.88) contrast(1.08); mask-image: linear-gradient(90deg, transparent, #000 23%, #000 85%, transparent); }
+		.art-shade { position: absolute; inset: 0 -30px 0 0; background: linear-gradient(90deg, var(--bg), transparent 25%, transparent 67%, var(--bg)), linear-gradient(0deg, var(--bg), transparent 25%, transparent 80%, var(--bg)); }
+		.diamond-lockup { position: relative; z-index: 1; transform: rotate(-8deg); text-align: center; filter: drop-shadow(0 14px 25px #0009); }
+		.diamond-count { font-family: var(--font-display); font-size: clamp(94px, 12vw, 155px); line-height: .75; font-weight: 900; letter-spacing: 0; color: var(--lime); text-shadow: 5px 5px 0 #57752c; }
+		.diamond-label { margin-top: 16px; color: #fff; font-family: var(--font-display); font-size: 30px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
+		.round-tag { position: absolute; right: 24px; bottom: 54px; z-index: 2; padding: 12px 15px; background: var(--orange); color: #20140f; font-family: var(--font-display); font-size: 19px; line-height: 1; font-weight: 800; text-transform: uppercase; transform: rotate(3deg); }
+		.ticker { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #171a17; }
+		.ticker-inner { min-height: 74px; display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; }
+		.ticker-item { display: flex; justify-content: center; gap: 11px; align-items: center; min-height: 40px; border-right: 1px solid var(--line); }
+		.ticker-item:last-child { border: 0; }
+		.ticker-num { color: var(--lime); font-family: var(--font-display); font-size: 27px; font-weight: 800; line-height: 1; }
+		.ticker-label { color: var(--muted); text-transform: uppercase; font-size: 9px; letter-spacing: .08em; }
+		.section { padding: 82px 0; }
+		.section-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 28px; }
+		.kicker { color: var(--orange); font-size: 10px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+		h2 { margin: 7px 0 0; font-family: var(--font-display); font-size: 48px; line-height: 1; font-weight: 800; text-transform: uppercase; }
+		.section-heading p { max-width: 360px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+		.prize-grid { display: grid; grid-template-columns: 1.28fr 1fr 1fr; gap: 12px; }
+		.prize { min-height: 210px; padding: 23px; position: relative; overflow: hidden; border: 1px solid var(--line); background: var(--panel); }
+		.prize::after { content: ""; width: 140px; height: 140px; position: absolute; right: -24px; bottom: -40px; border: 1px solid #ffffff14; transform: rotate(45deg); }
+		.prize.featured { background: var(--lime); color: #171a13; border-color: var(--lime); }
+		.prize.featured::after { border-color: #161b1340; }
+		.prize-number { position: absolute; right: 18px; top: 16px; color: #aeb5a9; font-family: var(--font-display); font-size: 14px; font-weight: 700; }
+		.featured .prize-number { color: #526331; }
+		.prize-icon { margin: 12px 0 22px; font-size: 26px; line-height: 1; }
+		.prize h3 { margin: 0; font-family: var(--font-display); font-size: 28px; line-height: .98; text-transform: uppercase; }
+		.prize p { max-width: 230px; margin: 9px 0 0; color: #a5aaa0; font-size: 11px; line-height: 1.5; }
+		.featured p { color: #495333; }
+		.quick-win { padding: 0 0 82px; }
+		.quick-win-inner { padding: 30px 32px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 30px; border: 1px solid var(--line); background: #171a17; }
+		.quick-win h2 { margin-top: 8px; font-size: 40px; }
+		.quick-win-list { margin: 17px 0 0; padding-left: 20px; color: #d0d4ca; font-size: 13px; line-height: 1.8; }
+		.quick-win-note { margin: 10px 0 0; color: var(--lime); font-size: 12px; font-weight: 600; }
+		.quick-win-action { display: grid; justify-items: start; gap: 9px; }
+		.quick-win-action .button { white-space: nowrap; }
+		.link-hint { margin: 0; color: var(--muted); font-size: 10px; }
+		.entry-section { padding: 0 0 82px; }
+		.entry-wrap { display: grid; grid-template-columns: .78fr 1.22fr; border: 1px solid var(--line); background: #171a17; }
+		.entry-aside { min-height: 390px; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; background: #222820; border-right: 1px solid var(--line); }
+		.entry-aside h2 { max-width: 320px; margin-top: 16px; font-size: 53px; }
+		.entry-aside p { max-width: 310px; color: #b2b9ac; font-size: 13px; line-height: 1.7; }
+		.entry-aside .safe-note { padding-top: 15px; border-top: 1px solid #ffffff20; color: #d7dfce; font-size: 11px; }
+		.entry-form { padding: 36px; display: grid; align-content: center; gap: 17px; }
+		.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+		.field { display: grid; gap: 8px; }
+		.field label { color: #c5c9c0; font-size: 11px; font-weight: 700; }
+		.field input { width: 100%; height: 46px; padding: 0 13px; border: 1px solid #3a4039; border-radius: 0; outline: 0; background: #111411; color: var(--ink); font-size: 13px; }
+		.field input:focus { border-color: var(--lime); }
+		.field input::placeholder { color: #686f66; }
+		.consent { display: flex; align-items: flex-start; gap: 10px; color: #a7ada3; font-size: 11px; line-height: 1.55; }
+		.consent input { margin: 2px 0 0; accent-color: var(--lime); }
+		.entry-form .button { justify-self: start; min-width: 174px; }
+		.form-message { min-height: 18px; margin: 0; color: var(--lime); font-size: 12px; line-height: 1.5; }
+		.form-message.error { color: var(--orange); }
+		footer { border-top: 1px solid var(--line); }
+		.footer-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: #888f85; font-size: 10px; }
+		.footer-inner strong { color: #c2c8bc; font-weight: 600; }
+		.fine-print { max-width: 590px; text-align: right; line-height: 1.6; }
+		.donation-section { padding: 0 0 72px; }
+		.donation-inner { padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border: 1px solid var(--line); background: #171a17; }
+		.donation-copy h2 { margin-top: 7px; font-size: 36px; }
+		.donation-copy p { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+		.pix-key { display: flex; align-items: center; gap: 14px; padding: 14px 17px; border: 1px solid #ffffff24; background: #111411; }
+		.pix-key span { color: var(--lime); font-size: 13px; font-weight: 700; overflow-wrap: anywhere; }
+		.pix-label { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+		.copy-button { min-height: 38px; padding: 0 12px; border: 1px solid #ffffff38; background: transparent; color: var(--ink); cursor: pointer; font-size: 11px; font-weight: 700; }
+		.copy-button:hover { background: #ffffff0c; }
+		.copy-status { min-width: 82px; color: var(--lime); font-size: 10px; }
+		@media (max-width: 760px) {
+			.shell { width: calc(100% - 36px); }
+			.topbar { height: 64px; }
+			.nav { gap: 15px; }
+			.nav a:not(.nav-cta) { display: none; }
+			.hero { min-height: 0; grid-template-columns: 1fr; }
+			.hero-copy { padding: 66px 0 30px; }
+			h1 { font-size: clamp(62px, 16vw, 92px); }
+			.hero-copy p { max-width: 400px; }
+			.hero-art { min-height: 270px; margin: -6px -18px 0; }
+			.hero-art img { inset: 0; width: 100%; height: 100%; }
+			.diamond-count { font-size: 112px; }
+			.round-tag { right: 20px; bottom: 30px; }
+			.ticker-inner { grid-template-columns: repeat(2, 1fr); padding: 9px 0; }
+			.ticker-item { justify-content: flex-start; padding-left: 12px; }
+			.ticker-item:nth-child(2) { border-right: 0; }
+			.ticker-item:nth-child(1), .ticker-item:nth-child(2) { border-bottom: 1px solid var(--line); }
+			.ticker-item:nth-child(3) { border-right: 1px solid var(--line); }
+			.ticker-item:nth-child(4) { border: 0; }
+			.section { padding: 62px 0; }
+			.section-heading { align-items: start; flex-direction: column; gap: 12px; }
+			h2 { font-size: 42px; }
+			.prize-grid { grid-template-columns: 1fr 1fr; }
+			.prize.featured { grid-column: 1 / -1; min-height: 185px; }
+			.prize { min-height: 185px; padding: 18px; }
+			.quick-win { padding-bottom: 60px; }
+			.quick-win-inner { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
+			.quick-win h2 { font-size: 36px; }
+			.quick-win-action { width: 100%; }
+			.quick-win-action .button { width: 100%; }
+			.entry-section { padding-bottom: 60px; }
+			.entry-wrap { grid-template-columns: 1fr; }
+			.entry-aside { min-height: 0; padding: 27px; border-right: 0; border-bottom: 1px solid var(--line); gap: 20px; }
+			.entry-aside h2 { font-size: 46px; }
+			.entry-aside p { margin-bottom: 0; }
+			.entry-form { padding: 27px; }
+			.donation-section { padding-bottom: 54px; }
+			.donation-inner { align-items: stretch; flex-direction: column; padding: 24px; }
+			.pix-key { align-items: flex-start; flex-direction: column; gap: 7px; }
+			.footer-inner { min-height: 100px; align-items: flex-start; flex-direction: column; justify-content: center; gap: 8px; padding: 18px 0; }
+			.fine-print { text-align: left; }
+		}
+		@media (max-width: 390px) {
+			.field-row { grid-template-columns: 1fr; }
+			.hero-actions { align-items: flex-start; flex-direction: column; }
+			.hero-note { padding-left: 2px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 		}
 	</style>
 </head>
 <body>
 	<header class="shell topbar">
-		<a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">D</span><span>DROP DE DIAMANTES</span></a>
-		<span class="status-tag">Painel administrativo</span>
+		<a class="brand" href="#inicio" aria-label="Drop de Diamantes, início">
+			<span class="brand-mark" aria-hidden="true">D</span>
+			<span>DROP DE DIAMANTES</span>
+		</a>
+		<nav class="nav" aria-label="Navegação principal">
+			<a href="#premios">Prêmios</a>
+			<a href="#como-participar">Como participar</a>
+			<a class="nav-cta" href="#inscricao">Entrar no sorteio <span aria-hidden="true">↗</span></a>
+		</nav>
 	</header>
-	<main class="shell">
-		<section class="panel login-panel" id="login-view" aria-labelledby="login-title">
-			<div class="kicker">Acesso restrito</div>
-			<h1 id="login-title">Área admin</h1>
-			<p>Digite o código de acesso para consultar as inscrições disponíveis neste navegador.</p>
-			<form id="login-form">
-				<div class="field">
-					<label for="access-code">Código de acesso</label>
-					<input id="access-code" name="accessCode" type="password" autocomplete="current-password" required>
+
+	<main>
+		<section class="shell hero" id="inicio">
+			<div class="hero-copy">
+				<div class="eyebrow"><span class="live-dot" aria-hidden="true"></span> Sorteio da comunidade · edição 01</div>
+				<h1>Seu próximo<br><em>drop</em> pode<br>ser lendário.</h1>
+				<p>Uma premiação especial pra quem cola nos vídeos. Diamantes, itens e surpresas para a tropa. Participação grátis e sem complicação.</p>
+				<div class="hero-actions">
+					<a class="button button-primary" href="#inscricao">Quero participar <span aria-hidden="true">↗</span></a>
+					<span class="hero-note">Grátis. Só precisa do seu ID de jogador.</span>
 				</div>
-				<button class="button button-primary" type="submit">Entrar no painel</button>
-				<p class="message" id="login-message" role="status" aria-live="polite"></p>
-			</form>
+			</div>
+			<div class="hero-art" aria-label="Destaque do prêmio: 2.000 diamantes">
+				<img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1100&q=85" alt="Jogador em uma arena de e-sports iluminada" fetchpriority="high">
+				<div class="art-shade" aria-hidden="true"></div>
+				<div class="diamond-lockup" aria-hidden="true">
+					<div class="diamond-count">2.000</div>
+					<div class="diamond-label">diamantes</div>
+				</div>
+				<div class="round-tag">+ prêmios surpresa</div>
+			</div>
 		</section>
 
-		<section class="dashboard" id="dashboard" aria-labelledby="dashboard-title">
-			<div class="dashboard-header">
-				<div><div class="kicker">Resumo da rodada</div><h1 id="dashboard-title">Inscrições</h1><p class="subheading">Participantes salvos localmente neste navegador.</p></div>
-				<div class="actions">
-					<button class="button" id="export-button" type="button">Exportar CSV</button>
-					<button class="button" id="logout-button" type="button">Sair</button>
+		<section class="ticker" aria-label="Informações do sorteio">
+			<div class="shell ticker-inner">
+				<div class="ticker-item"><span class="ticker-num">01</span><span class="ticker-label">ganhador principal</span></div>
+				<div class="ticker-item"><span class="ticker-num">03</span><span class="ticker-label">prêmios no total</span></div>
+				<div class="ticker-item"><span class="ticker-num" id="countdown">--:--:--</span><span class="ticker-label">até o encerramento</span></div>
+				<div class="ticker-item"><span class="ticker-num">R$ 0</span><span class="ticker-label">para participar</span></div>
+			</div>
+		</section>
+
+		<section class="shell section" id="premios">
+			<div class="section-heading">
+				<div><div class="kicker">O que tá no drop</div><h2>Prêmios da rodada</h2></div>
+				<p>Três chances de sair com algo a mais. Os ganhadores serão anunciados no meu TikTok após o encerramento.</p>
+			</div>
+			<div class="prize-grid">
+				<article class="prize featured">
+					<span class="prize-number">01 / PRINCIPAL</span><div class="prize-icon" aria-hidden="true">✦</div>
+					<h3>2.000 diamantes</h3><p>Para dar aquele upgrade na conta.</p>
+				</article>
+				<article class="prize">
+					<span class="prize-number">02</span><div class="prize-icon" aria-hidden="true">◈</div>
+					<h3>Cartão presente</h3><p>Um mimo gamer pra você escolher.</p>
+				</article>
+				<article class="prize">
+					<span class="prize-number">03</span><div class="prize-icon" aria-hidden="true">⚡</div>
+					<h3>Surpresa da tropa</h3><p>Um prêmio extra revelado no resultado.</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="shell quick-win" aria-labelledby="quick-win-title">
+			<div class="quick-win-inner">
+				<div>
+					<div class="kicker">Oportunidade especial</div>
+					<h2 id="quick-win-title">Ganhe agora, sem esperar!</h2>
+					<ol class="quick-win-list">
+						<li>Instale o TikTok Lite.</li>
+						<li>Crie uma conta nova ou acesse uma conta inativa há mais de 30 dias.</li>
+						<li>Clique no link abaixo.</li>
+					</ol>
+					<p class="quick-win-note">Depois, espere seu prêmio chegar pelo correio do jogo.</p>
+				</div>
+				<div class="quick-win-action">
+					<a class="button button-primary" id="tiktok-lite-link" href="#">Quero ganhar <span aria-hidden="true">↗</span></a>
+					<p class="link-hint">Troque o <code>#</code> no <code>href</code> pelo seu link.</p>
 				</div>
 			</div>
-			<div class="metrics" aria-label="Resumo das inscrições">
-				<div class="metric"><span class="metric-label">Inscrições encontradas</span><strong class="metric-value" id="entry-count">0</strong></div>
-				<div class="metric"><span class="metric-label">Resultados da busca</span><strong class="metric-value" id="result-count">0</strong></div>
-			</div>
-			<section class="draw-panel" aria-labelledby="draw-title">
-				<div class="draw-top">
-					<div class="draw-copy"><div class="kicker">Sorteio</div><h2 id="draw-title">Ganhadores da rodada</h2><p>A busca da tabela não altera os participantes elegíveis. Cada inscrição pode ser sorteada uma vez por sessão.</p></div>
-					<button class="button button-primary" id="draw-button" type="button">Sortear ganhador</button>
+		</section>
+
+		<section class="shell entry-section" id="inscricao">
+			<div class="entry-wrap" id="como-participar">
+				<div class="entry-aside">
+					<div><div class="kicker">É rapidinho</div><h2>Cola com a gente.</h2><p>Preencha seus dados de jogador e pronto: você entra na lista demonstrativa desta página.</p></div>
+					<div class="safe-note">🔒 Nunca pedimos senha, código de acesso ou dados de pagamento.</div>
 				</div>
-				<p class="draw-status" id="draw-status" role="status" aria-live="polite"></p>
-				<ol class="winner-list" id="winner-list" aria-label="Histórico de ganhadores"></ol>
-			</section>
-			<div class="panel table-panel">
-				<div class="table-tools"><input class="search" id="search-input" type="search" placeholder="Buscar por apelido ou ID" aria-label="Buscar por apelido ou ID"></div>
-				<div class="table-wrap">
-					<table>
-						<thead><tr><th scope="col">#</th><th scope="col">Apelido</th><th scope="col">ID de jogador</th><th scope="col">Data de inscrição</th></tr></thead>
-						<tbody id="entries-body"></tbody>
-					</table>
+				<form class="entry-form" id="entry-form">
+					<div class="field-row">
+						<div class="field"><label for="player-name">Apelido no jogo</label><input id="player-name" name="nickname" type="text" maxlength="24" placeholder="Como aparece no jogo" autocomplete="nickname" required></div>
+						<div class="field"><label for="player-id">ID de jogador</label><input id="player-id" name="playerId" type="text" inputmode="numeric" pattern="[0-9]{6,20}" maxlength="20" placeholder="Ex.: 1234567890" required aria-describedby="id-help"><span id="id-help" class="hero-note">Somente números, de 6 a 20 dígitos.</span></div>
+					</div>
+					<label class="consent"><input type="checkbox" name="consent" required><span>Confirmo que meus dados estão corretos e aceito ser contatado caso seja selecionado. Não informe dados de acesso à sua conta.</span></label>
+					<button class="button button-primary" type="submit">Confirmar inscrição <span aria-hidden="true">→</span></button>
+					<p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+				</form>
+			</div>
+		</section>
+
+		<section class="shell donation-section" aria-labelledby="donation-title">
+			<div class="donation-inner">
+				<div class="donation-copy">
+					<div class="kicker">Apoie o conteúdo</div>
+					<h2 id="donation-title">Doe aqui!</h2>
+					<p>Doar não é obrigatório e não muda suas chances no sorteio. Obrigado por fortalecer o conteúdo.</p>
+				</div>
+				<div class="pix-key">
+					<span class="pix-label">Chave Pix</span>
+					<span id="pix-value">doacoespix23@gmail.com</span>
+					<button class="copy-button" id="copy-pix" type="button">Copiar</button>
+					<span class="copy-status" id="copy-status" role="status" aria-live="polite"></span>
 				</div>
 			</div>
-			<p class="notice">Importante: este painel lê o armazenamento local deste dispositivo e navegador. O código nesta página é uma barreira visual, não uma autenticação segura para um site público.</p>
 		</section>
 	</main>
+
+	<footer>
+		<div class="shell footer-inner">
+			<strong>DROP DE DIAMANTES <span aria-hidden="true">·</span> comunidade Free Fire</strong>
+			<div class="fine-print">Esta é uma página independente de fã, sem vínculo com Garena. Inscrições desta demonstração ficam apenas neste dispositivo e não são enviadas ao organizador.</div>
+		</div>
+	</footer>
+
 	<script>
-		const accessCode = "SHADOW2011";
-		const loginView = document.querySelector("#login-view");
-		const dashboard = document.querySelector("#dashboard");
-		const loginForm = document.querySelector("#login-form");
-		const loginMessage = document.querySelector("#login-message");
-		const entriesBody = document.querySelector("#entries-body");
-		const searchInput = document.querySelector("#search-input");
-		const drawButton = document.querySelector("#draw-button");
-		const drawStatus = document.querySelector("#draw-status");
-		const winnerList = document.querySelector("#winner-list");
-		let entries = [];
-		let drawnIndexes = [];
+		const form = document.querySelector("#entry-form");
+		const message = document.querySelector("#form-message");
+		const deadline = new Date("2026-11-14T20:00:00-03:00").getTime();
 
-		function loadEntries() {
+		function updateCountdown() {
+			const remaining = Math.max(0, deadline - Date.now());
+			const days = Math.floor(remaining / 86400000);
+			const hours = Math.floor((remaining % 86400000) / 3600000);
+			const minutes = Math.floor((remaining % 3600000) / 60000);
+			document.querySelector("#countdown").textContent = remaining === 0
+				? "ENCERRADO"
+				: `${days}d ${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m`;
+		}
+
+		updateCountdown();
+		window.setInterval(updateCountdown, 60000);
+
+		document.querySelector("#copy-pix").addEventListener("click", async () => {
+			const pixKey = document.querySelector("#pix-value").textContent.trim();
+			const status = document.querySelector("#copy-status");
+
 			try {
-				const storedEntries = JSON.parse(localStorage.getItem("dropEntries") || "[]");
-				entries = Array.isArray(storedEntries) ? storedEntries.filter((entry) => entry && typeof entry === "object") : [];
+				if (navigator.clipboard && window.isSecureContext) {
+					await navigator.clipboard.writeText(pixKey);
+				} else {
+					const temporaryInput = document.createElement("textarea");
+					temporaryInput.value = pixKey;
+					temporaryInput.style.position = "fixed";
+					temporaryInput.style.opacity = "0";
+					document.body.append(temporaryInput);
+					temporaryInput.select();
+					const copied = document.execCommand("copy");
+					temporaryInput.remove();
+					if (!copied) throw new Error("Copy command failed");
+				}
+				status.textContent = "Chave copiada!";
 			} catch {
-				entries = [];
+				status.textContent = "Não foi possível copiar.";
 			}
-			try {
-				const storedDraws = JSON.parse(sessionStorage.getItem("dropDrawnIndexes") || "[]");
-				drawnIndexes = Array.isArray(storedDraws)
-					? [...new Set(storedDraws.filter((index) => Number.isInteger(index) && index >= 0 && index < entries.length))]
-					: [];
-			} catch {
-				drawnIndexes = [];
-			}
-			document.querySelector("#entry-count").textContent = String(entries.length);
-			renderEntries();
-			renderDraw();
-		}
-
-		function renderDraw() {
-			winnerList.replaceChildren();
-			drawnIndexes.forEach((entryIndex, index) => {
-				const entry = entries[entryIndex];
-				if (!entry) return;
-				const item = document.createElement("li");
-				const number = document.createElement("span");
-				number.className = "winner-number";
-				number.textContent = `Ganhador ${index + 1}`;
-				const name = document.createElement("strong");
-				name.className = "winner-name";
-				name.textContent = entry.nickname || "Sem apelido";
-				const playerId = document.createElement("span");
-				playerId.className = "winner-id";
-				playerId.textContent = `ID ${entry.playerId || "não informado"}`;
-				item.append(number, name, playerId);
-				winnerList.append(item);
-			});
-
-			const remaining = entries.length - drawnIndexes.length;
-			drawButton.disabled = entries.length === 0;
-			if (entries.length === 0) {
-				drawButton.textContent = "Sem inscritos";
-				drawStatus.textContent = "Não há inscrições para sortear neste navegador.";
-			} else if (remaining === 0) {
-				drawButton.disabled = false;
-				drawButton.textContent = "Reiniciar sorteio";
-				drawStatus.textContent = "Todos os inscritos já foram sorteados. Você pode reiniciar para começar uma nova rodada.";
-			} else {
-				drawButton.textContent = "Sortear ganhador";
-				drawStatus.textContent = `${remaining} ${remaining === 1 ? "inscrição elegível" : "inscrições elegíveis"} para sortear.`;
-			}
-		}
-
-		function randomIndex(max) {
-			if (!window.crypto || !window.crypto.getRandomValues) return Math.floor(Math.random() * max);
-			const range = 0x100000000;
-			const limit = Math.floor(range / max) * max;
-			const value = new Uint32Array(1);
-			do {
-				window.crypto.getRandomValues(value);
-			} while (value[0] >= limit);
-			return value[0] % max;
-		}
-
-		function saveDraws() {
-			try {
-				sessionStorage.setItem("dropDrawnIndexes", JSON.stringify(drawnIndexes));
-			} catch {
-				return;
-			}
-		}
-
-		drawButton.addEventListener("click", () => {
-			if (entries.length === 0) return;
-			if (drawnIndexes.length === entries.length) {
-				drawnIndexes = [];
-				saveDraws();
-				renderDraw();
-				drawStatus.textContent = "Sorteio reiniciado. Pronto para uma nova rodada.";
-				return;
-			}
-			const availableIndexes = entries.map((_, index) => index).filter((index) => !drawnIndexes.includes(index));
-			const winnerIndex = availableIndexes[randomIndex(availableIndexes.length)];
-			drawnIndexes.push(winnerIndex);
-			saveDraws();
-			renderDraw();
-			const winner = entries[winnerIndex];
-			drawStatus.textContent = `Ganhador sorteado: ${winner.nickname || "Sem apelido"} · ID ${winner.playerId || "não informado"}.`;
 		});
 
-		function renderEntries() {
-			const query = searchInput.value.trim().toLocaleLowerCase("pt-BR");
-			const filteredEntries = entries.filter((entry) => `${entry.nickname || ""} ${entry.playerId || ""}`.toLocaleLowerCase("pt-BR").includes(query));
-			document.querySelector("#result-count").textContent = String(filteredEntries.length);
-			entriesBody.replaceChildren();
-
-			if (filteredEntries.length === 0) {
-				const row = document.createElement("tr");
-				row.className = "empty-row";
-				const cell = document.createElement("td");
-				cell.colSpan = 4;
-				cell.textContent = query ? "Nenhuma inscrição corresponde à busca." : "Nenhuma inscrição salva neste navegador.";
-				row.append(cell);
-				entriesBody.append(row);
-				return;
-			}
-
-			filteredEntries.forEach((entry, index) => {
-				const row = document.createElement("tr");
-				const registeredAt = entry.registeredAt ? new Date(entry.registeredAt) : null;
-				const dateLabel = registeredAt && !Number.isNaN(registeredAt.getTime())
-					? new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(registeredAt)
-					: "Não informado";
-				[index + 1, entry.nickname || "Sem apelido", entry.playerId || "Sem ID", dateLabel].forEach((value) => {
-					const cell = document.createElement("td");
-					cell.textContent = String(value);
-					row.append(cell);
-				});
-				entriesBody.append(row);
-			});
-		}
-
-		function csvCell(value) {
-			let safeValue = String(value ?? "");
-			if (/^[\s]*[=+@-]/.test(safeValue)) safeValue = `'${safeValue}`;
-			return `"${safeValue.replaceAll('"', '""')}"`;
-		}
-
-		function exportEntries() {
-			const rows = [["Apelido", "ID de jogador", "Data de inscrição"], ...entries.map((entry) => [entry.nickname || "", entry.playerId || "", entry.registeredAt || ""])];
-			const csv = "\uFEFF" + rows.map((row) => row.map(csvCell).join(",")).join("\r\n");
-			const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
-			const link = document.createElement("a");
-			link.href = url;
-			link.download = "inscricoes-drop-de-diamantes.csv";
-			link.click();
-			URL.revokeObjectURL(url);
-		}
-
-		function showDashboard() {
-			loginView.style.display = "none";
-			dashboard.style.display = "block";
-			loadEntries();
-		}
-
-		loginForm.addEventListener("submit", (event) => {
+		form.addEventListener("submit", (event) => {
 			event.preventDefault();
-			if (document.querySelector("#access-code").value !== accessCode) {
-				loginMessage.textContent = "Código incorreto. Tente novamente.";
+			if (!form.reportValidity()) return;
+
+			const data = new FormData(form);
+			const playerId = String(data.get("playerId")).trim();
+			if (!/^[0-9]{6,20}$/.test(playerId)) {
+				message.textContent = "Confira o ID: use somente números, de 6 a 20 dígitos.";
+				message.classList.add("error");
 				return;
 			}
-			sessionStorage.setItem("dropAdminAccess", "granted");
-			loginMessage.textContent = "";
-			showDashboard();
-		});
 
-		searchInput.addEventListener("input", renderEntries);
-		document.querySelector("#export-button").addEventListener("click", exportEntries);
-		document.querySelector("#logout-button").addEventListener("click", () => {
-			sessionStorage.removeItem("dropAdminAccess");
-			searchInput.value = "";
-			loginForm.reset();
-			dashboard.style.display = "none";
-			loginView.style.display = "block";
-		});
+			const entry = {
+				nickname: String(data.get("nickname")).trim(),
+				playerId,
+				registeredAt: new Date().toISOString()
+			};
 
-		if (sessionStorage.getItem("dropAdminAccess") === "granted") showDashboard();
+			try {
+				const entries = JSON.parse(localStorage.getItem("dropEntries") || "[]");
+				entries.push(entry);
+				localStorage.setItem("dropEntries", JSON.stringify(entries));
+				message.textContent = "Inscrição demonstrativa salva neste dispositivo. Ela não foi enviada ao organizador.";
+				message.classList.remove("error");
+				form.reset();
+			} catch {
+				message.textContent = "Não foi possível salvar neste navegador. Nenhum dado foi enviado.";
+				message.classList.add("error");
+			}
+		});
 	</script>
 </body>
 </html>
