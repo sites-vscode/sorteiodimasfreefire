@@ -313,21 +313,37 @@
 		const supabaseClient = supabaseConfig?.url && supabaseConfig?.anonKey
 			? window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey)
 			: null;
-		const deadline = new Date("2026-10-11T14:19:00-03:00").getTime();
+		const deadline = new Date("2026-10-17T18:00:00-03:00").getTime();
+		const entryControls = form.querySelectorAll("input, button[type='submit']");
+		const closedMessage = "As inscrições para esta rodada foram encerradas.";
+
+		function setFormClosedState(isClosed) {
+			entryControls.forEach((control) => {
+				control.disabled = isClosed;
+			});
+			if (isClosed) {
+				message.textContent = closedMessage;
+				message.classList.add("error");
+			} else if (message.textContent === closedMessage) {
+				message.textContent = "";
+				message.classList.remove("error");
+			}
+		}
 
 		function updateCountdown() {
 			const remaining = Math.max(0, deadline - Date.now());
 			const days = Math.floor(remaining / 86400000);
 			const hours = Math.floor((remaining % 86400000) / 3600000);
 			const minutes = Math.floor((remaining % 3600000) / 60000);
-			const seconds = Math.floor((remaining % 60000) / 1000);
-			document.querySelector("#countdown").textContent = remaining === 0
+			const isClosed = remaining === 0;
+			document.querySelector("#countdown").textContent = isClosed
 				? "ENCERRADO"
-				: `${days}d ${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m ${String(seconds).padStart(2, "0")}s`;;
+				: `${days}d ${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m`;
+			setFormClosedState(isClosed);
 		}
 
 		updateCountdown();
-		window.setInterval(updateCountdown, 1000);
+		window.setInterval(updateCountdown, 60000);
 
 		document.querySelector("#copy-pix").addEventListener("click", async () => {
 			const pixKey = document.querySelector("#pix-value").textContent.trim();
@@ -355,6 +371,11 @@
 
 		form.addEventListener("submit", async (event) => {
 			event.preventDefault();
+			if (Date.now() >= deadline) {
+				message.textContent = "As inscrições para esta rodada foram encerradas.";
+				message.classList.add("error");
+				return;
+			}
 			if (!form.reportValidity()) return;
 
 			const data = new FormData(form);
