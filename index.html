@@ -383,8 +383,17 @@
 				message.textContent = "Inscrição recebida! Boa sorte no sorteio.";
 				message.classList.remove("error");
 				form.reset();
-			} catch {
-				message.textContent = "Não foi possível enviar a inscrição. Confira sua conexão e tente novamente.";
+			} catch (error) {
+				console.error("Falha ao enviar inscrição para o Supabase:", error);
+				if (error?.code === "PGRST205" || error?.code === "42P01") {
+					message.textContent = "Inscrições indisponíveis: a tabela ainda não está configurada no banco.";
+				} else if (error?.code === "42501") {
+					message.textContent = "Inscrições indisponíveis: falta liberar a permissão de envio no banco.";
+				} else if (!error?.code) {
+					message.textContent = "Não foi possível conectar ao serviço. Confira sua internet e tente novamente.";
+				} else {
+					message.textContent = "Não foi possível salvar a inscrição. Confira os dados e tente novamente.";
+				}
 				message.classList.add("error");
 			} finally {
 				submitButton.disabled = false;
