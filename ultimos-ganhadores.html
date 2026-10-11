@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏆</text></svg>">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#111411">
+	<meta name="description" content="Confira os últimos ganhadores dos sorteios da comunidade Drop de Diamantes.">
+	<title>Últimos ganhadores | Drop de Diamantes</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			color-scheme: dark;
+			--ink: #f5f4ee;
+			--muted: #a5aaa0;
+			--bg: #111411;
+			--panel: #1a1e1a;
+			--line: #30362f;
+			--lime: #c8f169;
+			--orange: #ff754d;
+			--display: "Barlow Condensed", Impact, sans-serif;
+			--body: "DM Sans", sans-serif;
+		}
+		* { box-sizing: border-box; }
+		body { min-height: 100vh; margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+		a { color: inherit; text-decoration: none; }
+		.shell { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+		.topbar { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid #ffffff12; }
+		.brand { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+		.brand-mark { width: 32px; height: 32px; display: grid; place-items: center; background: var(--lime); color: #111411; font: 800 20px var(--display); clip-path: polygon(0 0,100% 0,100% 75%,75% 100%,0 100%); }
+		.top-links { display: flex; align-items: center; gap: 18px; color: #c6c9c1; font-size: 12px; }
+		.top-links a:hover { color: var(--lime); }
+		main { padding: 76px 0 96px; }
+		.intro { max-width: 650px; margin-bottom: 34px; }
+		.kicker { color: var(--orange); font-size: 10px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+		h1 { margin: 9px 0 12px; font: 900 clamp(48px, 8vw, 76px)/.92 var(--display); text-transform: uppercase; }
+		h1 span { color: var(--lime); }
+		.intro p { max-width: 510px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+		.winner-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+		.winner-card { min-height: 190px; padding: 22px; border: 1px solid var(--line); border-top: 2px solid var(--lime); background: var(--panel); }
+		.winner-round { color: var(--orange); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+		.winner-name { margin: 18px 0 5px; font: 700 30px/1 var(--display); overflow-wrap: anywhere; }
+		.winner-prize { margin: 0; color: var(--lime); font-size: 12px; font-weight: 700; }
+		.winner-date { margin: 15px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
+		.empty-state { padding: 28px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); font-size: 13px; line-height: 1.7; }
+		.empty-state strong { color: var(--ink); }
+		footer { border-top: 1px solid var(--line); }
+		.footer-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 16px; color: var(--muted); font-size: 10px; }
+		.footer-inner a:hover { color: var(--lime); }
+		@media (max-width: 700px) {
+			main { padding: 54px 0 68px; }
+			.winner-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		}
+		@media (max-width: 480px) {
+			.shell { width: calc(100% - 32px); }
+			.topbar { min-height: 64px; }
+			.top-links { gap: 12px; font-size: 10px; }
+			main { padding-top: 44px; }
+			.winner-grid { grid-template-columns: 1fr; }
+			.winner-card { min-height: 160px; }
+			.footer-inner { align-items: flex-start; flex-direction: column; justify-content: center; padding: 16px 0; }
+		}
+	</style>
+</head>
+<body>
+	<header class="shell topbar">
+		<a class="brand" href="index.html" aria-label="Drop de Diamantes, início">
+			<span class="brand-mark" aria-hidden="true">D</span>
+			<span>DROP DE DIAMANTES</span>
+		</a>
+		<nav class="top-links" aria-label="Navegação principal">
+			<a href="index.html">Início</a>
+			<a href="index.html#inscricao">Participar <span aria-hidden="true">↗</span></a>
+		</nav>
+	</header>
+	<main class="shell">
+		<section class="intro" aria-labelledby="page-title">
+			<div class="kicker">Resultados publicados</div>
+			<h1 id="page-title">Últimos <span>ganhadores</span></h1>
+			<p>Veja quem já levou prêmios nos sorteios da comunidade.</p>
+		</section>
+
+		<!-- Para publicar um resultado, substitua este aviso por um ou mais cartões .winner-card. Edite nome, prêmio, rodada e data diretamente aqui. -->
+		<div class="empty-state">
+			<strong>Nenhum ganhador publicado ainda.</strong><br>
+			Os resultados aparecerão aqui assim que forem anunciados novos ganhadores.
+		</div>
+		<!-- Modelo de cartão para copiar e preencher:
+		<div class="winner-grid">
+			<article class="winner-card">
+				<div class="winner-round">Rodada 1</div>
+				<h2 class="winner-name">Nome do ganhador</h2>
+				<p class="winner-prize">Prêmio recebido</p>
+				<p class="winner-date">Data do sorteio</p>
+			</article>
+		</div>
+		-->
+	</main>
+	<footer>
+		<div class="shell footer-inner">
+			<a href="index.html">← Voltar para o sorteio</a>
+			<strong>DROP DE DIAMANTES <span aria-hidden="true">·</span> comunidade Free Fire</strong>
+		</div>
+	</footer>
+</body>
+</html>
