@@ -320,13 +320,14 @@
 			const days = Math.floor(remaining / 86400000);
 			const hours = Math.floor((remaining % 86400000) / 3600000);
 			const minutes = Math.floor((remaining % 3600000) / 60000);
+			const seconds = Math.floor((remaining % 60000) / 1000);
 			document.querySelector("#countdown").textContent = remaining === 0
 				? "ENCERRADO"
-				: `${days}d ${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m`;
+				: `${days}d ${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m ${String(seconds).padStart(2, "0")}s`;;
 		}
 
 		updateCountdown();
-		window.setInterval(updateCountdown, 60000);
+		window.setInterval(updateCountdown, 1000);
 
 		document.querySelector("#copy-pix").addEventListener("click", async () => {
 			const pixKey = document.querySelector("#pix-value").textContent.trim();
